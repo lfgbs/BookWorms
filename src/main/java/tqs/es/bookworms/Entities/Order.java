@@ -21,15 +21,17 @@ public class Order {
     private int booksReady;
     @NotNull
     private OrderStatus status;
+    private Rider rider;
 
     public Order() {}
 
-    public Order(Long locationId, Long buyerId, List<Long> bookIds, int booksReady ,OrderStatus status) {
+    public Order(Long locationId, Long buyerId, List<Long> bookIds, int booksReady ,OrderStatus status, Rider rider) {
         this.locationId=locationId;
         this.buyerId = buyerId;
         this.bookIds = bookIds;
         this.booksReady = booksReady;
         this.status = status;
+        this.rider=rider;
     }
 
     public Long getLocationId() {
@@ -67,6 +69,14 @@ public class Order {
         this.status = status;
     }
 
+    public Rider getRider() {
+        return rider;
+    }
+
+    public void setRider(Rider rider) {
+        this.rider = rider;
+    }
+
     public void performAction(Operation operation){status.performOperation(this, operation);}
 
     @Override
@@ -74,7 +84,9 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", buyerId=" + buyerId +
+                ", bookIds=" + bookIds +
                 ", status=" + status +
+                ", rider=" + rider +
                 '}';
     }
 }
