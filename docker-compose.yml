@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  mysql_bookworms:
+    container_name: mysql_bookworms
+    image: mysql/mysql-server:5.6
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: 'bookworms_db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'psw'
+    restart: on-failure
+
+
+
+
+
