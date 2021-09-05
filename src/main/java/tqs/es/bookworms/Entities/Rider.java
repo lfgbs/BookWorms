@@ -16,19 +16,23 @@ public class Rider {
     private String name;
     @NotNull
     private String password;
-    @NotNull
-    private String location;
+    private Long locationId;
     @NotNull
     private RiderStatus status;
 
     public Rider(){}
 
-    public Rider(String email, String name, String password, String location, RiderStatus status) {
+    public Rider(String email, String name) {
         this.email = email;
         this.name = name;
-        this.password = password;
-        this.location = location;
-        this.status = status;
+        this.status = RiderStatus.AVAILABLE;
+    }
+
+    public Rider(String email, String name, Long locationId) {
+        this.email = email;
+        this.name = name;
+        this.locationId = locationId;
+        this.status = RiderStatus.AVAILABLE;
     }
 
     public Long getId() {
@@ -59,12 +63,12 @@ public class Rider {
         this.password = password;
     }
 
-    public String getLocation() {
-        return location;
+    public Long getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationId(Long location) {
+        this.locationId = location;
     }
 
     public RiderStatus getStatus() {
@@ -75,12 +79,25 @@ public class Rider {
         this.status = status;
     }
 
+    //returns true if order ready to be delivered
+    public boolean checkOrderReady(){
+        return false;
+    }
+
+    //changes orderStatus to deliver
+    public void deliverOrder(Long orderId){}
+
+    public void deliveryComplete(Long orderId) {
+    }
+
     @Override
     public String toString() {
         return "Rider{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
+                ", location='" + locationId + '\'' +
                 '}';
     }
+
+
 }

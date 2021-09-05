@@ -42,6 +42,14 @@ public class Order {
         checkOrderReady();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
     public Long getLocationId() {
         return locationId;
     }
@@ -86,6 +94,10 @@ public class Order {
         this.riderId = riderId;
     }
 
+    public Date getPlacementDate() {
+        return placementDate;
+    }
+
     public void incrementBooksReady(){
         this.booksReady++;
         checkOrderReady();
@@ -97,10 +109,13 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
+                ", address='" + address + '\'' +
+                ", locationId=" + locationId +
                 ", buyerId=" + buyerId +
                 ", bookIds=" + bookIds +
                 ", status=" + status +
-                ", rider=" + riderId +
+                ", riderId=" + riderId +
+                ", placementDate=" + placementDate +
                 '}';
     }
 }
