@@ -4,10 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,6 +12,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    private String address;
     @NotNull
     private Long locationId;
     @NotNull
@@ -31,15 +30,16 @@ public class Order {
 
     public Order() {}
 
-    public Order(Long locationId, Long buyerId, Set<Long> bookIds, int booksReady ,OrderStatus status, Long riderId) {
+    public Order(Long locationId, Long buyerId, String address,Set<Long> bookIds, int booksReady) {
         this.locationId=locationId;
         this.buyerId = buyerId;
+        this.address=address;
         this.bookIds = bookIds;
         this.booksReady = booksReady;
-        this.status = status;
-        this.riderId=riderId;
+        this.status = new Placing();
         long milliSeconds = System.currentTimeMillis();
         this.placementDate= new Date(milliSeconds);
+        checkOrderReady();
     }
 
     public Long getLocationId() {
@@ -54,10 +54,6 @@ public class Order {
         return bookIds;
     }
 
-    public int getBookListSize() {
-        return bookIds.size();
-    }
-
     public int getBooksReady() {
         return booksReady;
     }
@@ -66,7 +62,7 @@ public class Order {
         this.booksReady = booksReady;
     }
 
-    private void checkForBooksReady(){}
+    public void checkOrderReady(){}
 
     public OrderStatus getStatus() {
         return status;
@@ -82,6 +78,10 @@ public class Order {
 
     public void setRider(Long riderId) {
         this.riderId = riderId;
+    }
+
+    public void incrementBooksReady(){
+
     }
 
     public void performAction(Operation operation){status.performOperation(this, operation);}

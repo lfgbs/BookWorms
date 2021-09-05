@@ -31,6 +31,10 @@ public class Rider {
         this.status = status;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -20,8 +20,8 @@ class ClientTest {
 
     private Location location1 = new Location();
     private Location location2 = new Location();
-    private Client client1 = new Client("email", "Luís", location1.getId());
-    private Client client2 = new Client("email", "Ana", location2.getId());
+    private Client client1 = new Client("email", "Luís", "Rua" ,location1.getId());
+    private Client client2 = new Client("email", "Ana", "Travessa" ,location2.getId());
 
     @Mock
     private Book book1;

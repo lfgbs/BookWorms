@@ -14,7 +14,6 @@ public class Manager {
     private String email;
     private String name;
     private String password;
-    private Long locationId;
 
     public Manager(){}
 
@@ -47,11 +46,4 @@ public class Manager {
         this.password = password;
     }
 
-    public Long getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
-    }
 }

@@ -19,16 +19,23 @@ public class Client {
     @NotNull
     private String password;
     @NotNull
+    private String address;
+    @NotNull
     private Long locationId;
     @ElementCollection
     private Set<Long> cart = new HashSet<>(); //cart guarda os títulos que o utilizador pretende comprar
 
     public Client(){}
 
-    public Client(String email, String name, Long locationId) {
+    public Client(String email, String name, String address ,Long locationId) {
         this.email = email;
         this.name = name;
+        this.address=address;
         this.locationId = locationId;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -53,6 +60,14 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Long getLocationId() {
