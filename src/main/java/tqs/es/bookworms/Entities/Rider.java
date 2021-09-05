@@ -19,6 +19,7 @@ public class Rider {
     private Long locationId;
     @NotNull
     private RiderStatus status;
+    private Long orderId;
 
     public Rider(){}
 
@@ -79,15 +80,23 @@ public class Rider {
         this.status = status;
     }
 
-    //returns true if order ready to be delivered
-    public boolean checkOrderReady(){
-        return false;
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     //changes orderStatus to deliver
-    public void deliverOrder(Long orderId){}
+    public void deliverOrder(Long orderId){
+        setStatus(RiderStatus.OCCUPIED);
+        setOrderId(orderId);
+    }
 
-    public void deliveryComplete(Long orderId) {
+    public void deliveryComplete() {
+        setStatus(RiderStatus.AVAILABLE);
+        setOrderId(null);
     }
 
     @Override

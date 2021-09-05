@@ -103,7 +103,7 @@ public class Order {
         checkOrderReady();
     }
 
-    public void performAction(Operation operation){status.performOperation(this, operation);}
+    public void performOperation(Operation operation){status.performOperation(this, operation);}
 
     @Override
     public String toString() {
@@ -118,4 +118,6 @@ public class Order {
                 ", placementDate=" + placementDate +
                 '}';
     }
+
+
 }

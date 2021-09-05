@@ -5,7 +5,6 @@ public class EnRouteClient implements OrderStatus {
     public void performOperation(Order order, Operation operation) throws IllegalStateException {
         if(operation==Operation.CONFIRM_RECEPTION_CLIENT){
             order.setStatus(new Fulfilled());
-            //System.out.println(order.toString() + " is on it's way to the customer");
         }else if(operation==Operation.CHECK_STATUS){//check order status
             System.out.println(order.toString());
         }else{
