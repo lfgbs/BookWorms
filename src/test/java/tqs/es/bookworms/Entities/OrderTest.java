@@ -168,12 +168,34 @@ class OrderTest {
     @Test
     void performConfirmReceptionClientOnInvalidStatus() {
         Order order2 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 1 );
-        //Checking For Status ENROuteLocation
+        //Checking For Status == EnRouteLocation
         assertThrows(IllegalStateException.class, ()->order2.performAction(Operation.CONFIRM_RECEPTION_CLIENT));
-        //Checking for status WaitingFOrRIder
+        //Checking for status == WaitingFOrRIder
         order2.performAction(Operation.CONFIRM_RECEPTION_LOCATION);
         assertThrows(IllegalStateException.class, ()->order2.performAction(Operation.CONFIRM_RECEPTION_CLIENT));
         assertFalse(order2.getStatus().getClass().equals(new Fulfilled().getClass()));
+
+    }
+
+    @DisplayName("Checking status is possible in any orderStatus")
+    @Test
+    void performingStatusCheckOnEveryOrderStatus(){
+        Order order2 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 1 );
+
+        order2.performAction(Operation.CHECK_STATUS);
+        assertTrue(order2.getStatus().getClass().equals(new EnRouteLocation().getClass()));
+
+        order2.performAction(Operation.CONFIRM_RECEPTION_LOCATION);
+        order2.performAction(Operation.CHECK_STATUS);
+        assertTrue(order2.getStatus().getClass().equals(new WaitingForRider().getClass()));
+
+        order2.performAction(Operation.DELIVER);
+        order2.performAction(Operation.CHECK_STATUS);
+        assertTrue(order2.getStatus().getClass().equals(new EnRouteClient().getClass()));
+
+        order2.performAction(Operation.CONFIRM_RECEPTION_CLIENT);
+        order2.performAction(Operation.CHECK_STATUS);
+        assertTrue(order2.getStatus().getClass().equals(new Fulfilled().getClass()));
 
     }
 

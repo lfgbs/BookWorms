@@ -62,7 +62,13 @@ public class Order {
         this.booksReady = booksReady;
     }
 
-    public void checkOrderReady(){}
+    public void checkOrderReady(){
+        if (this.booksReady == this.bookIds.size()){
+            this.setStatus(new WaitingForRider());
+        }else{
+            this.setStatus(new EnRouteLocation());
+        }
+    }
 
     public OrderStatus getStatus() {
         return status;
@@ -81,7 +87,8 @@ public class Order {
     }
 
     public void incrementBooksReady(){
-
+        this.booksReady++;
+        checkOrderReady();
     }
 
     public void performAction(Operation operation){status.performOperation(this, operation);}
