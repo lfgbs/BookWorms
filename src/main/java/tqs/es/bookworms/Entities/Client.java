@@ -3,8 +3,7 @@ package tqs.es.bookworms.Entities;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Client {
@@ -20,17 +19,16 @@ public class Client {
     @NotNull
     private String password;
     @NotNull
-    private String location;
+    private Long locationId;
     @ElementCollection
-    private List<String> cart = new ArrayList<>(); //cart guarda os títulos que o utilizador pretende comprar
+    private Set<Long> cart = new HashSet<>(); //cart guarda os títulos que o utilizador pretende comprar
 
     public Client(){}
 
-    public Client(String email, String name, String password, String location) {
+    public Client(String email, String name, Long locationId) {
         this.email = email;
         this.name = name;
-        this.password = password;
-        this.location = location;
+        this.locationId = locationId;
     }
 
     public String getEmail() {
@@ -57,19 +55,34 @@ public class Client {
         this.password = password;
     }
 
-    public String getLocation() {
-        return location;
+    public Long getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
-    public List<String> getCart() {
+    public Set<Long> getCart() {
         return cart;
     }
 
-    public void setCart(List<String> cart) {
+    public void setCart(Set<Long> cart) {
         this.cart = cart;
     }
+
+    public boolean addBooktoCart(Long bookId){
+        return this.cart.add(bookId);
+    }
+
+    public boolean removeBookFromCart(Long bookId){
+        return this.cart.remove(bookId);
+    }
+
+    //empties cart after sale
+    public void emptyCart(){
+        this.cart.clear();
+    }
+
+
 }

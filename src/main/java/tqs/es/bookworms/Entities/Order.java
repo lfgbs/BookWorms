@@ -3,8 +3,12 @@ package tqs.es.bookworms.Entities;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Order {
@@ -16,22 +20,26 @@ public class Order {
     @NotNull
     private Long buyerId;
     @ElementCollection //lista de livros na encomenda
-    private List<Long> bookIds = new ArrayList<>();
+    private Set<Long> bookIds = new HashSet<>();
     @NotNull
     private int booksReady;
     @NotNull
     private OrderStatus status;
-    private Rider rider;
+    private Long riderId;
+    @Temporal(TemporalType.DATE)
+    Date placementDate;
 
     public Order() {}
 
-    public Order(Long locationId, Long buyerId, List<Long> bookIds, int booksReady ,OrderStatus status, Rider rider) {
+    public Order(Long locationId, Long buyerId, Set<Long> bookIds, int booksReady ,OrderStatus status, Long riderId) {
         this.locationId=locationId;
         this.buyerId = buyerId;
         this.bookIds = bookIds;
         this.booksReady = booksReady;
         this.status = status;
-        this.rider=rider;
+        this.riderId=riderId;
+        long milliSeconds = System.currentTimeMillis();
+        this.placementDate= new Date(milliSeconds);
     }
 
     public Long getLocationId() {
@@ -42,9 +50,10 @@ public class Order {
         return buyerId;
     }
 
-    public List<Long> getBookIds() {
+    public Set<Long> getBookIds() {
         return bookIds;
     }
+
     public int getBookListSize() {
         return bookIds.size();
     }
@@ -57,9 +66,7 @@ public class Order {
         this.booksReady = booksReady;
     }
 
-    private void checkForBooksReady(){
-
-    }
+    private void checkForBooksReady(){}
 
     public OrderStatus getStatus() {
         return status;
@@ -69,12 +76,12 @@ public class Order {
         this.status = status;
     }
 
-    public Rider getRider() {
-        return rider;
+    public Long getRiderId() {
+        return riderId;
     }
 
-    public void setRider(Rider rider) {
-        this.rider = rider;
+    public void setRider(Long riderId) {
+        this.riderId = riderId;
     }
 
     public void performAction(Operation operation){status.performOperation(this, operation);}
@@ -86,7 +93,7 @@ public class Order {
                 ", buyerId=" + buyerId +
                 ", bookIds=" + bookIds +
                 ", status=" + status +
-                ", rider=" + rider +
+                ", rider=" + riderId +
                 '}';
     }
 }
