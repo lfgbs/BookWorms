@@ -59,15 +59,15 @@ class OrderTest {
     @Test
     void checkStatusOnCreationNotAllBooksReady(){
         Order order1 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 1 );
-        assertTrue(order1.getStatus().getClass().equals(new EnRouteLocation().getClass()));
-        assertFalse(order1.getStatus().getClass().equals(new WaitingForRider().getClass()));
+        assertThat(order1.getStatusId(), is(1));
     }
 
     @DisplayName("On creation status is WaitingForRider if all books are ready ")
     @Test
     void checkStatusOnCreationAllBooksReady(){
         Order order1 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 2 );
-        assertTrue(order1.getStatus().getClass().equals(new WaitingForRider().getClass()));
+        assertThat(order1.getStatusId(), is(2));
+
     }
 
     @DisplayName("On creation Rider is null")
@@ -108,7 +108,7 @@ class OrderTest {
     void incrementBooksReadyCallsCheckOrderReady() {
         Order order1 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 1 );
         order1.performOperation(Operation.CONFIRM_RECEPTION_LOCATION);
-        assertTrue(order1.getStatus().getClass().equals(new WaitingForRider().getClass()));
+        assertThat(order1.getStatusId(), is(2));
 
     }
 
@@ -125,7 +125,8 @@ class OrderTest {
     void performDeliverOnWaitingForRider() {
         Order order2 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 2 );
         order2.performOperation(Operation.DELIVER);
-        assertTrue(order2.getStatus().getClass().equals(new EnRouteClient().getClass()));
+        assertThat(order2.getStatusId(), is(3));
+
     }
 
     @DisplayName("Delivering Order when order is not ready")
@@ -133,17 +134,18 @@ class OrderTest {
     void performDeliverOnInvalidStatus() {
         Order order2 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 1 );
         assertThrows(IllegalStateException.class, ()->order2.performOperation(Operation.DELIVER));
-        assertFalse(order2.getStatus().getClass().equals(new EnRouteClient().getClass()));
+        assertFalse(order2.getStatusId()==3);
+
     }
 
     @DisplayName("Confirming reception at location when order is EnRouteLocation")
     @Test
     void performConfirmReceptionLocationOnEnRouteLocation() {
         Order order2 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 0 );
-        assertTrue(order2.getStatus().getClass().equals(new EnRouteLocation().getClass()));
+        assertThat(order2.getStatusId(), is(1));
         order2.performOperation(Operation.CONFIRM_RECEPTION_LOCATION);
         //confirming status remains the same because not all books have arrived
-        assertFalse(order2.getStatus().getClass().equals(new EnRouteClient().getClass()));
+        assertFalse(order2.getStatusId()==2);
     }
 
     @DisplayName("Confirming reception at location when order is not EnRouteLocation")
@@ -161,7 +163,8 @@ class OrderTest {
         Order order2 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 2 );
         order2.performOperation(Operation.DELIVER);
         order2.performOperation(Operation.CONFIRM_RECEPTION_CLIENT);
-        assertTrue(order2.getStatus().getClass().equals(new Fulfilled().getClass()));
+        assertThat(order2.getStatusId(), is(4));
+
     }
 
     @DisplayName("Confirming reception at location when order is not EnRouteLocation")
@@ -173,7 +176,8 @@ class OrderTest {
         //Checking for status == WaitingFOrRIder
         order2.performOperation(Operation.CONFIRM_RECEPTION_LOCATION);
         assertThrows(IllegalStateException.class, ()->order2.performOperation(Operation.CONFIRM_RECEPTION_CLIENT));
-        assertFalse(order2.getStatus().getClass().equals(new Fulfilled().getClass()));
+        assertFalse(order2.getStatusId()==4);
+
 
     }
 
@@ -183,19 +187,23 @@ class OrderTest {
         Order order2 = new Order(location1.getId(), client1.getId(), client1.getAddress() ,new HashSet<Long>(Arrays.asList(book1.getId(), book2.getId())) , 1 );
 
         order2.performOperation(Operation.CHECK_STATUS);
-        assertTrue(order2.getStatus().getClass().equals(new EnRouteLocation().getClass()));
+        assertThat(order2.getStatusId(), is(1));
+
 
         order2.performOperation(Operation.CONFIRM_RECEPTION_LOCATION);
         order2.performOperation(Operation.CHECK_STATUS);
-        assertTrue(order2.getStatus().getClass().equals(new WaitingForRider().getClass()));
+        assertThat(order2.getStatusId(), is(2));
+
 
         order2.performOperation(Operation.DELIVER);
         order2.performOperation(Operation.CHECK_STATUS);
-        assertTrue(order2.getStatus().getClass().equals(new EnRouteClient().getClass()));
+        assertThat(order2.getStatusId(), is(3));
+
 
         order2.performOperation(Operation.CONFIRM_RECEPTION_CLIENT);
         order2.performOperation(Operation.CHECK_STATUS);
-        assertTrue(order2.getStatus().getClass().equals(new Fulfilled().getClass()));
+        assertThat(order2.getStatusId(), is(4));
+
 
     }
 

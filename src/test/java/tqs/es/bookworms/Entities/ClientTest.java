@@ -29,12 +29,6 @@ class ClientTest {
     private Book book2;
     @Mock
     private Book book3;
-    /*
-    private Book book1 = new Book("ABC de TQS", 2012, 15.99, location1.getId());
-    private Book book2 = new Book("ABC de TQS", 2012, 15.99, location2.getId());
-    private Book book3 = new Book("ABC de TQS", 2012, 15.99, location2.getId());
-
-     */
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -92,9 +86,7 @@ class ClientTest {
     @DisplayName("Removing book from cart")
     @Test
     void removeBookFromCart() {
-        System.out.println(client2.getCart().size());
         assertTrue(client2.removeBookFromCart(book1.getId()));
-        System.out.println(client2.getCart().size());
         assertThat(client2.getCart().size(), is(1));
         assertFalse(client2.getCart().contains(book1.getId()));
     }
@@ -102,7 +94,6 @@ class ClientTest {
     @DisplayName("Trying to remove a book that is not in the cart")
     @Test
     void removeBookNotInCart() {
-        System.out.println(client2.getCart().size());
         assertFalse(client2.removeBookFromCart(book3.getId()));
     }
 
