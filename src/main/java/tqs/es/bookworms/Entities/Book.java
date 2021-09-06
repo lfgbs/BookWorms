@@ -1,9 +1,6 @@
 package tqs.es.bookworms.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -16,14 +13,20 @@ public class Book {
     private Long buyerId;
     private Long orderId;
     private BookStatus status;
+    private Long locationId;
 
     public Book() {}
 
-    public Book(String title, int year, double price) {
+    public Book(String title, int year, double price, Long locationId) {
         this.title = title;
         this.year = year;
         this.price = price;
         this.status = BookStatus.AVAILABLE;
+        this.locationId=locationId;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -64,6 +67,14 @@ public class Book {
 
     public void setStatus(BookStatus status) {
         this.status = status;
+    }
+
+    public Long getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
     @Override

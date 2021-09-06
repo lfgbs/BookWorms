@@ -14,9 +14,36 @@ public class Manager {
     private String email;
     private String name;
     private String password;
-    @ElementCollection //lista de localizações
-    private List<Long> locationsIds = new ArrayList<Long>();
-    @ElementCollection //lista de compras efetuadas
-    private List<Long> orderIds = new ArrayList<Long>();
+
+    public Manager(){}
+
+    public Manager(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }
