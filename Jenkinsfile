@@ -4,6 +4,7 @@ pipeline {
     stages {
 
         stage('Quality Gate Check') {
+         agent any
             steps {
                 script{
                     withSonarQubeEnv('SonarQube'){
