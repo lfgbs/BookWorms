@@ -9,6 +9,8 @@ import tqs.es.bookworms.Entities.OrderStatus;
 
 import tqs.es.bookworms.Exceptions.ResourceNotFoundException;
 
+import java.util.List;
+
 @Controller
 public class OrderController {
 
@@ -27,8 +29,14 @@ public class OrderController {
         order.performOperation(operation);
     }
 
+    //SIGNALS TO THE RIDER THAT DELIVERY IS COMPLETE - CALLED IN CLIENTCONTROLLER
     public void deliveryComplete(Long orderId) throws ResourceNotFoundException {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order Not found for id: " + orderId));;
         riderController.deliveryComplete(order.getRiderId());
+    }
+
+    //RETURNS ALL ORDERS ON A GIVEN LOCATION - CALLED IN LOCATIONCONTROLLER
+    public List<Order> findOrdersOnLocation(Long locationId) {
+        return null;
     }
 }

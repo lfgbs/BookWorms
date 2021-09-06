@@ -99,6 +99,7 @@ public class Client {
     public void emptyCart(){
         this.cart.clear();
     }
+    
     //This changes the order Status to Fulfilled
     public void confirmReception(Long orderId) {
     }

@@ -1,5 +1,7 @@
 package tqs.es.bookworms.Entities;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,12 +9,17 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String title;
+    @NotNull
     private int year;
+    @NotNull
     private double price;
     private Long buyerId;
     private Long orderId;
+    @NotNull
     private BookStatus status;
+    @NotNull
     private Long locationId;
 
     public Book() {}
