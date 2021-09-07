@@ -36,8 +36,6 @@ class RiderTest {
         Mockito.when( location1.getId()).thenReturn((long) 1);
         Mockito.when( order1.getId()).thenReturn((long) 1);
         Mockito.when( order2.getId()).thenReturn((long) 2);
-        Mockito.when( orderController.getStatus(order2.getId())).thenReturn(new WaitingForRider());
-        Mockito.when( orderController.getStatus(order1.getId())).thenReturn(new EnRouteLocation());
     }
 
     @org.junit.jupiter.api.AfterEach

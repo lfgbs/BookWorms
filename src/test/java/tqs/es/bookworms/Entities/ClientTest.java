@@ -29,6 +29,8 @@ class ClientTest {
     private Book book2;
     @Mock
     private Book book3;
+    @Mock
+    private Book book4;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -36,9 +38,14 @@ class ClientTest {
         Mockito.when( book1.getId()).thenReturn((long) 1);
         Mockito.when( book2.getId()).thenReturn((long) 2);
         Mockito.when( book3.getId()).thenReturn((long) 3);
+        Mockito.when( book4.getId()).thenReturn((long) 4);
+        Mockito.when( book1.getTitle()).thenReturn("title1");
+        Mockito.when( book2.getTitle()).thenReturn("same book");
+        Mockito.when( book3.getTitle()).thenReturn("same book");
+        Mockito.when( book4.getTitle()).thenReturn("another book");
 
-        client2.addBooktoCart(book1.getId());
-        client2.addBooktoCart(book2.getId());
+        client2.addBooktoCart(book1.getTitle());
+        client2.addBooktoCart(book2.getTitle());
     }
 
     @org.junit.jupiter.api.AfterEach
@@ -61,40 +68,35 @@ class ClientTest {
     @DisplayName("Adding books to cart updates it")
     @Test
     void addBookToCart() {
-        client1.addBooktoCart(book1.getId());
+        client1.addBooktoCart(book1.getTitle());
         assertThat(client1.getCart().size(), is(1));
-        assertTrue(client1.getCart().contains(book1.getId()));
-        client1.addBooktoCart(book2.getId());
+        assertTrue(client1.getCart().contains(book1.getTitle()));
+        client1.addBooktoCart(book2.getTitle());
         assertThat(client1.getCart().size(), is(2));
-        assertTrue(client1.getCart().contains(book2.getId()));
+        assertTrue(client1.getCart().contains(book2.getTitle()));
+        client1.addBooktoCart(book3.getTitle());
+        assertThat(client1.getCart().size(), is(3));
 
     }
 
     @DisplayName("Cart doesn't contain elements that haven't been added")
     @Test
     void searchForUnaddedBook(){
-        assertFalse(client2.getCart().contains(book3.getId()));
-    }
-
-    @DisplayName("Adding book to cart updates it")
-    @Test
-    void addDuplicateToCart() {
-        assertTrue(client1.addBooktoCart(book1.getId()));
-        assertFalse(client1.addBooktoCart(book1.getId()));
+        assertFalse(client2.getCart().contains(book4.getTitle()));
     }
 
     @DisplayName("Removing book from cart")
     @Test
     void removeBookFromCart() {
-        assertTrue(client2.removeBookFromCart(book1.getId()));
+        assertTrue(client2.removeBookFromCart(book1.getTitle()));
         assertThat(client2.getCart().size(), is(1));
-        assertFalse(client2.getCart().contains(book1.getId()));
+        assertFalse(client2.getCart().contains(book1.getTitle()));
     }
 
     @DisplayName("Trying to remove a book that is not in the cart")
     @Test
     void removeBookNotInCart() {
-        assertFalse(client2.removeBookFromCart(book3.getId()));
+        assertFalse(client2.removeBookFromCart(book4.getTitle()));
     }
 
     @DisplayName("Emptying cart operation check")

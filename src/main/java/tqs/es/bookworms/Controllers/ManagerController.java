@@ -65,6 +65,7 @@ public class ManagerController {
         return "manager/AddLocationForm_form";
     }
 
+    //ADDING LOCATION
     @PostMapping(value="/manager/{managerId}/addLocationForm")
     public String addLocation(@PathVariable("managerId") Long managerId, @ModelAttribute Location location) throws ResourceNotFoundException {
 

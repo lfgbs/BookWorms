@@ -29,7 +29,15 @@ public class Order {
     @Temporal(TemporalType.DATE)
     Date placementDate;
 
-    public Order() {}
+    public Order() {
+    }
+
+    public Order(Long locationId, Long buyerId, String address, int statusId) {
+        this.locationId=locationId;
+        this.buyerId = buyerId;
+        this.address=address;
+        this.statusId = 5;
+    }
 
     public Order(Long locationId, Long buyerId, String address,Set<Long> bookIds, int booksReady) {
         this.locationId=locationId;
@@ -43,8 +51,16 @@ public class Order {
         checkOrderReady();
     }
 
+    public void setBookIds(Set<Long> bookIds) {
+        this.bookIds = bookIds;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getAddress() {
@@ -53,6 +69,10 @@ public class Order {
 
     public Long getLocationId() {
         return locationId;
+    }
+
+    public void setBuyerId(Long buyerId) {
+        this.buyerId = buyerId;
     }
 
     public Long getBuyerId() {
@@ -77,6 +97,10 @@ public class Order {
         }else{
             this.setStatusId(1);
         }
+    }
+
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
     public Integer getStatusId() {
@@ -104,7 +128,7 @@ public class Order {
         checkOrderReady();
     }
 
-    public void performOperation(Operation operation) throws IllegalStateException {
+    public Order performOperation(Operation operation) throws IllegalStateException {
         switch (operation){
             case CHECK_STATUS:
                 System.out.println(this.toString());
@@ -133,9 +157,7 @@ public class Order {
 
         }
 
-
-
-
+        return this;
     }
 
     @Override
