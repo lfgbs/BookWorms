@@ -67,6 +67,10 @@ public class LocationController {
         return redirect;
     }
 
+    //Gets All Locations - called by managerController
+    public List<Location> getAllLocations(){
+        return locationRepository.findAll();
+    }
 
     //CREATES THE LOCATION RECEIVED - CALLED IN MANAGERCONTROLLER
     public void addLocation(Location location) throws ResourceNotFoundException {
@@ -78,4 +82,10 @@ public class LocationController {
         }
     }
 
+    /////////////////////////////////////////
+    //ADDING THE BOOKS
+    @PostMapping(value = "/location")
+    public void addLocationPostman(@PathVariable("managerId") Long managerId){
+        locationRepository.save(new Location("Lisboa"));
+    }
 }

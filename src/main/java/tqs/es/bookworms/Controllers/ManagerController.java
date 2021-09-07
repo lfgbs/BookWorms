@@ -1,7 +1,6 @@
 package tqs.es.bookworms.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +8,8 @@ import tqs.es.bookworms.DB.ManagerRepository;
 import tqs.es.bookworms.Entities.Location;
 import tqs.es.bookworms.Entities.Manager;
 import tqs.es.bookworms.Exceptions.ResourceNotFoundException;
+
+import java.util.List;
 
 @RequestMapping(value = "/bookworms")
 @Controller
@@ -18,7 +19,7 @@ public class ManagerController {
     ManagerRepository managerRepository;
 
     @Autowired
-    BookController bookController;
+    OrderController orderController;
 
     @Autowired
     LocationController locationController;
@@ -31,7 +32,8 @@ public class ManagerController {
 
     //REGISTO
     @PostMapping(value="/signup/manager")
-    public String registration(@ModelAttribute Manager manager, Model model) {
+    public String registration(@ModelAttribute Manager manager) {
+        /*
         try {
             if (manager.getName().isEmpty() || manager.getPassword().isEmpty() || manager.getEmail().isEmpty()) {
                 return "manager/SignUpManagerError_form";
@@ -42,6 +44,10 @@ public class ManagerController {
         } catch (DataIntegrityViolationException e) {
             return "manager/SignUpManagerError_form";
         }
+
+         */
+        managerRepository.save(new Manager("maill","Luís"));
+        return "redirect:/bookworms/";
     }
 
     //LOGIN - faz redirect para a MainPage if successful
@@ -54,7 +60,9 @@ public class ManagerController {
     @GetMapping(value = "/manager/{managerId}")
     public String MainPage(@PathVariable("managerId") Long managerId, Model model){
         Manager manager = managerRepository.getById(managerId);
+        List<Location> locations = locationController.getAllLocations();
         model.addAttribute("manager", manager);
+        model.addAttribute("locations", locations);
         return "manager/MainPage_form";
     }
 
@@ -75,9 +83,11 @@ public class ManagerController {
         return redirect;
     }
 
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //MAPPINGS AQUI SÃO SÓ PARA CONFIRMAÇÃO NO POSTMAN QUE ESTÁ TUDO BEM
-
+    //CLICKING BUTTON THAT TAKES TO FORM TO ADD LOCATION
+    @GetMapping(value = "/managers")
+    public List<Manager> getAllManagers(){
+        return managerRepository.findAll();
+    }
 }

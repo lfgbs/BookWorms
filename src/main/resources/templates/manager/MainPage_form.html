@@ -1,10 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>BookWorms</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href ="@{/styles/main.css}" href="../styles/main.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <style>
+        body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+        body {font-size:16px;}
+        .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+        .w3-half img:hover{opacity:1}
+    </style>
+
 </head>
 <body>
 
+
+
+<div class="wrapper d-flex align-items-stretch">
+
+    <div class="w-100 vh-100">
+
+        <nav class="m-0 navbar navbar-expand-sm navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-primary d-lg-none"  data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle Menu</span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-sm-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <h3>BookWorms</h3>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{'http://localhost:8081/bookworms/manager/' + ${manager.id}}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'http://localhost:8081/bookworms/'}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="w3-container" style="margin-top:20px; margin-left: 30px">
+            <h1 class="w3-jumbo w3-text-orange"><b>Locations</b></h1>
+        </div>
+
+        <div class="w3-container" style="margin-top:20px; margin-left: 30px">
+            <!-- Casas geral -->
+            <div class="w3-row-padding w3-grayscale">
+                <div class="w3-col m4 w3-margin-bottom" th:each="location : ${locations}">
+                    <div class="w3-light-grey"  style="height: 200px;">
+                        <div class="w3-container">
+                            <h2 th:text="${location.location}">Cidade</h2>
+                            <div style="margin-top: 30px">
+                                <center><a class="btn btn-primary" th:href="@{'http://localhost:8081/bookworms/manager/' + ${manager.id} + '/location/' + ${location.id}}" >Entrar</a></center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-col m4 w3-margin-bottom">
+                    <div class="w3-light-grey"  style="height: 200px;">
+                        <div class="w3-container">
+                            <h2>Adicionar Localização</h2>
+                            <div style="margin-top: 20px">
+                                <center><a class="btn" th:href="@{'http://localhost:8081/bookworms/manager/' + ${manager.id} + '/addLocationForm'}"> <i class="fa fa-plus-circle" style="font-size:48px;"></i> </a></center>
+                                <!-- <a class="btn btn-primary" th:href="@{${#httpServletRequest.requestURI} + 'users/' + ${user.id} + '/houses/' + ${house.id} + '/dashboard'}" >Entrar</a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End page content -->
+            </nav>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/scrp.js}"></script>
+
+</div>
 </body>
 </html>
+

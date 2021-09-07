@@ -122,4 +122,9 @@ public class OrderController {
     public List<Order> findOrdersReadyToDeliverOnLocation(Long locationId, int statusId){
         return orderRepository.findOrdersByLocationIdAndStatusId(locationId, statusId);
     }
+
+    //called by managerController
+    public List<Order> findOrdersByStatusId(int statusId) {
+        return orderRepository.findOrdersByStatusId(statusId);
+    }
 }

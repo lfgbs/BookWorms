@@ -26,7 +26,7 @@ public class RiderController {
     OrderController orderController;
 
     //MainPage rider
-    @GetMapping(value = "rider/{riderId}/orders/{orderId}")
+    @GetMapping(value = "rider/{riderId}/orders")
     public String mainPageRider(@PathVariable("riderId") Long riderId, @PathVariable("orderId") Long orderId, Model model) throws ResourceNotFoundException {
         Rider rider = riderRepository.findById(riderId).orElseThrow(() -> new ResourceNotFoundException("Rider Not found for id: " + riderId));;
         List<Order> ordersReadyToDeliver = orderController.findOrdersReadyToDeliverOnLocation(rider.getLocationId(), 2);
@@ -35,9 +35,7 @@ public class RiderController {
         return "rider/MainPage_form";
     }
 
-
-
-        //entregar livros
+    //entregar livros
     @PutMapping(value = "rider/{riderId}/orders/{orderId}")
     public String deliverOrder(@PathVariable("riderId") Long riderId, @PathVariable("orderId") Long orderId) throws ResourceNotFoundException {
         Rider rider = riderRepository.findById(riderId).orElseThrow(() -> new ResourceNotFoundException("Rider Not found for id: " + riderId));;
